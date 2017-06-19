@@ -81,7 +81,7 @@ The table below compares the RMSE for the position and velocity along the x and 
 
 
 |RMSE | RADAR | LASER  | SENSOR FUSION | IMPROVEMENT FROM BEST |
-|:------------------------------------------------------------:|
+|-----|-------|--------|---------------|-----------------------|
 |Px   | 0.2279| 0.1841 | 0.0760        | 58.7%                 |
 |Py   | 0.2971| 0.1495 | 0.0825        | 44.8%                 |
 |Vx   | 0.4466| 0.6908 | 0.3516        | 21.3%                 |
