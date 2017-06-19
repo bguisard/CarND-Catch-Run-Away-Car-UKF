@@ -67,6 +67,28 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  ///* intermediate matrix used to calc state covariance
+  MatrixXd X_diff_;
+
+  ///* intermediate matrix used to calc state cross covariance
+  MatrixXd Z_diff_;
+
+  ///* laser covariance matrix
+  MatrixXd R_laser_;
+
+  ///* radar covariance matrix
+  MatrixXd R_radar_;
+
+  ///* if this is true, the program will output files for NIS for laser and radar
+  bool write_NIS_;
+
+  ///* if this is true, the program will print x_ and P_ to a file instead of screen
+  bool write_state_to_file_;
+
+  int k_iteration;
+
+  ///* if this is true, the program will print debugging outputs to a file
+  bool write_debug_file_;
 
   /**
    * Constructor
@@ -95,13 +117,36 @@ public:
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(MeasurementPackage meas_package);
+  void UpdateLidar(const VectorXd &z);
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(MeasurementPackage meas_package);
+  void UpdateRadar(const VectorXd &z);
+
+/**
+ * Generates matrix of augmented Sigma points
+ * @param (pointer to Xsig_aug)
+ */
+  void GenerateAugmentedSigmaPoints(MatrixXd* Xsig_aug_);
+
+/**
+ * Predicts Augmented Sigma points for a given delta_t
+ * @param delta_t
+ */
+  void PredictSigmaPoints(double delta_t);
+
+/**
+ * Predicts State Mean and Covariance
+ */
+  void PredictMeanAndCovariance();
+
+/**
+ * Normalizes angles between -PI and +PI
+ * @param (double angle)
+ */
+  double NormalizeAngle(double angle);
 };
 
 #endif /* UKF_H */
